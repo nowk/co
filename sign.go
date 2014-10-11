@@ -28,7 +28,11 @@ func SignSum(m Messenger, h shaNewFunc, key, sum []byte) (Signature, error) {
 		return nil, err
 	}
 
-	mac.Write(msg)
+	_, err = mac.Write(msg)
+	if err != nil {
+		return nil, err
+	}
+
 	return mac.Sum(sum), nil
 }
 
@@ -43,7 +47,11 @@ func (s Signature) Base64Encoding(e *base64.Encoding) ([]byte, error) {
 	w := bytes.NewBuffer(b)
 
 	enc := base64.NewEncoder(e, w)
-	enc.Write(s)
+	_, err := enc.Write(s)
+	if err != nil {
+		return nil, err
+	}
+
 	if err := enc.Close(); err != nil {
 		return nil, err
 	}
