@@ -14,6 +14,7 @@ Given a struct
       Expires  int64
     }
 
+    // Message satisfies co.Messenger interface
     func (s S3) Message() ([]byte, error) {
       return []byte(strings.Join([]string{
         "GET",
