@@ -22,12 +22,12 @@ func Sign(m Messenger, h shaNewFunc, key []byte) (Signature, error) {
 
 // SignSum allows you to add sum bytes to the signature
 func SignSum(m Messenger, h shaNewFunc, key, sum []byte) (Signature, error) {
-	mac := hmac.New(h, key)
 	msg, err := m.Message()
 	if err != nil {
 		return nil, err
 	}
 
+	mac := hmac.New(h, key)
 	_, err = mac.Write(msg)
 	if err != nil {
 		return nil, err
