@@ -15,12 +15,14 @@ type shaNewFunc func() hash.Hash
 // Signature type
 type Signature []byte
 
-// Sign returns an hmac Signature
+// Sign returns an hmac Signature with nil sum
 func Sign(m Messenger, h shaNewFunc, key []byte) (Signature, error) {
 	return SignSum(m, h, key, nil)
 }
 
 // SignSum allows you to add sum bytes to the signature
+// Any errors from the Message method or writing of the hmac will abort the
+// signing and return the error
 func SignSum(m Messenger, h shaNewFunc, key, sum []byte) (Signature, error) {
 	msg, err := m.Message()
 	if err != nil {
